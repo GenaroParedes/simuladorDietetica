@@ -35,8 +35,7 @@ carritoBtn.addEventListener('click', () => {
 /*Cerrar presionando X*/
 document.addEventListener('click', (e) => {
   if(e.target.classList.contains('carrito-salir')){
-    carritoFront.classList.add('no-active');
-    carritoBack.classList.add('no-active');
+    cerrarCarrito();
   }
 });
 
@@ -44,10 +43,14 @@ document.addEventListener('click', (e) => {
 carritoBack.addEventListener('click', (e) => {
   /*Si presionamos el front, nos va a dar como target algun elemento hijo de ese div front, y no el back...*/
   if(e.target === carritoBack){
-    carritoFront.classList.add('no-active');
-    carritoBack.classList.add('no-active');
+    cerrarCarrito();
   }
 });
+
+function cerrarCarrito(){
+  carritoFront.classList.add('no-active');
+  carritoBack.classList.add('no-active');
+}
 
 
 /*Agregar productos al carrito al presionar el boton*/
@@ -181,6 +184,7 @@ function renderizarCarrito() {
     carrito = [];
     guardarCarrito();
     renderizarCarrito();
+    cerrarCarrito();
   });
 
   // Evento botones "Eliminar producto"
