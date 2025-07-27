@@ -249,6 +249,7 @@ header{
     top: 1.5rem;
     right: 5.5rem;
     cursor: pointer;
+    z-index: 3000;
 }
 
 .carrito-activado {
@@ -395,4 +396,25 @@ header{
         font-size: 1.4rem;
         font-weight: 700;
     }
+}
+
+/*Modal finalizar compra*/
+.modal-content {
+    min-height: 150px; /* Ajustá según tu necesidad */
+    padding: 2rem;
+}
+
+  /* Aumentar tamaño de los textos */
+.modal-content .modal-title {
+    font-size: 2rem;
+}
+
+.modal-content .modal-body {
+    font-size: 1.4rem;
+    /* Centrado horizontal y vertical */
+    display: flex;
+    justify-content: center;  /* Centra horizontalmente */
+    align-items: center;      /* Centra verticalmente */
+    text-align: center;       /* Alinea el texto al centro */
+    height: 100%;             /* Asegura que ocupe toda la altura disponible */
 }

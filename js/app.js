@@ -2,8 +2,6 @@ const contenedorProductos = document.querySelector('.contenedor-productos');
 const carritoBtn = document.querySelector('.logo-carrito');
 const carritoFront = document.querySelector('.carrito-front');
 const carritoBack = document.querySelector('.carrito-back');
-const cerrarCarrito = document.querySelector('.carrito-salir')
-
 
 
 productos.forEach((producto) => {
@@ -164,7 +162,7 @@ function renderizarCarrito() {
   contenedorFinal.innerHTML = `
     <p class="parrafo-precio">Total: <span class="precio-total">$${total}</span></p>
     <button class="btn btn-danger btn-lg mt-3 btn-vaciar w-100 p-4 fs-4">🗑️ Vaciar carrito</button>
-    <button class="btn btn-primary btn-lg mt-3 btn-finalizar w-100 p-4 fs-4">✅ Finalizar compra</button>
+    <button class="btn btn-primary btn-lg mt-3 btn-finalizar w-100 p-4 fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal">✅ Finalizar compra</button>
   `;
 
   carritoFront.appendChild(contenedorFinal);
@@ -180,11 +178,16 @@ function renderizarCarrito() {
   // Evento botón "Finalizar compra"
   const btnFinalizar = carritoFront.querySelector('.btn-finalizar');
   btnFinalizar.addEventListener('click', () => {
-    alert("¡Gracias por tu compra, Genaro! 🛒🧾");
+    const modal = document.querySelector('.modal');
+    const modalInstance = bootstrap.Modal.getOrCreateInstance(modal);
     carrito = [];
     guardarCarrito();
     renderizarCarrito();
     cerrarCarrito();
+
+    setTimeout(() => {
+      modalInstance.hide(); // Oculta el modal
+    }, 2000);
   });
 
   // Evento botones "Eliminar producto"
