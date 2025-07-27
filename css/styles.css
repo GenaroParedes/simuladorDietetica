@@ -1,0 +1,398 @@
+:root {
+    --green-color: #2C511C;
+    --gray-color: #424651;
+    --sky-color: #658E89;
+    --light-green-color: #89A749;
+    --orange-color: #D62900;
+    --light-brown-color: #EADCBB;
+    --rose-color: #F29EC1;
+    --fuente_principal: "Open Sans", sans-serif;
+    --green-button: #198754;
+}
+/*Bases*/
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: var(--fuente_principal);
+    font-size: 1.6rem;
+    line-height: 1.8;
+}
+
+.contenedor { 
+    width: 95%;
+    max-width: 120rem;
+    margin: 0 auto;
+}
+
+/*Header*/
+header{ 
+    background-color: var(--light-brown-color);
+    div {
+        max-width: 120rem;
+        a {
+            display: flex;
+            height: 100%;
+        }
+    }
+}
+
+.contenido-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    margin: 1.5rem 0;
+    width: 100px;
+    height: 100px;
+}
+
+.logo-carrito{
+    width: 5rem;
+    height: 5rem;
+    display: inline-block;
+    margin-right: 2rem;
+    position: relative;
+    cursor: pointer;
+
+    .img-carrito{
+        width: 100%;
+        height: 100%;
+    }
+
+    .cantidad-carrito{
+        position: absolute;
+        font-size: 1.3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 700;
+        top: -1rem;
+        right: -2rem;
+        color: white;
+        background-color: var(--orange-color);
+        width: 3rem;
+        height: 3rem;
+        border-radius: 100%;
+    }
+}
+
+/*Main*/
+.carousel-inner{
+
+    .carousel-item{
+        img {
+            height: 70vh;
+        }
+    }
+}
+
+.main { 
+    position: relative;
+    text-align: center;
+    margin: auto 0;
+
+    .main-titulo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    color: white;
+    font-size: 2.2rem;
+    font-weight: 800;
+    width: 100%;
+    text-align: center;
+    
+        h1{
+            
+            font-size: 5rem;
+            font-weight: 900;
+        }
+
+        p{
+            padding-bottom: 5rem;
+        }
+
+        a{
+            display: inline-block;
+            text-decoration: none;
+            border-radius: 1.2rem;
+            background-color: var(--green-button);
+            color: white;
+            font-weight: 600;
+            padding: .7rem 2rem;
+            font-size: 2rem;
+            
+            
+        }  
+
+        a:hover{
+            background-color: #157347;
+            font-weight: 700;
+
+        }
+    }
+}
+
+#carouselExample{
+    button{
+        z-index: 1500;
+    }
+}
+
+/*Productos*/
+.productos { 
+    background-color: var(--light-brown-color);
+    padding-top: 5rem;
+
+    h2{
+        text-align: center;
+        font-weight: 700;
+        font-size: 3rem;
+    }
+
+    .contenedor-productos{
+        margin: 0 auto;
+        max-width: 120rem;
+    }
+
+    .imagen-producto{
+        height: 300px;        /* Ajustá según lo que te guste */
+        object-fit: cover;    /* Mantiene el recorte sin deformar */
+    }
+
+    .producto:hover {
+        transform: translateY(0.3rem);
+    }
+
+    .precio-producto{
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: green;
+            padding: 1rem 0;
+        }
+    
+    .btn-producto {
+        font-size: 1.5rem;
+        padding: .8rem;
+    }
+
+    .btn-producto:hover{
+        font-weight: 700;
+    }
+}
+
+/*Footer*/
+.footer{
+    padding: 6rem;
+    text-align: center;
+    background-color: var(--rose-color);
+}
+
+/*Carrito front y back*/
+.carrito-back {
+    background-color: rgba(0, 0, 0, 0.5); /* fondo negro con 50% de opacidad */
+    position: fixed;                     /* cubre toda la pantalla */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2000;
+    display: flex;
+    justify-content: flex-end; /* hace que el carrito-front esté a la derecha */
+}
+
+.no-active{
+    display: none;
+}
+
+.carrito-front {
+    background-color: white;  /* fondo del carrito en sí */
+    width: 600px;             /* ancho del panel del carrito */
+    height: 100vh;            /* altura: toda la ventana visible */
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    padding: 4rem;
+    overflow-y: auto;         /* permite scroll vertical si el contenido es muy alto */
+    position: fixed;          /* asegurate que sea fixed */
+    top: 0;                  /* pegado arriba */
+    right: 0;                /* pegado a la derecha */
+    z-index: 2100;           /* que esté arriba de carrito-back */
+    /* para que el contenido no se solape con el padding */
+    box-sizing: border-box;
+    max-width: 100%;
+
+    h3{
+        margin-top: 5rem;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .parrafo-precio {
+        font-size: 3rem;
+    }
+}
+
+.carrito-salir{
+    font-size: 3.5rem;
+    font-weight: 600;
+    position: absolute;
+    top: 1.5rem;
+    right: 5.5rem;
+    cursor: pointer;
+}
+
+.carrito-activado {
+    display: block;
+}
+
+.tabla-carrito {
+    display: grid;
+    grid-template-columns: 60px 1fr 80px 100px;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    font-size: 1.4rem;
+}
+
+.tabla-carrito.titulo {
+    font-weight: bold;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 0.5rem;
+}
+
+.tabla-carrito img {
+    width: 100%;
+    max-width: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.cantidad-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cantidad-control button {
+    font-size: 1.2rem;
+    padding: 0.2rem 0.6rem;
+}
+
+@media screen and ( max-width: 620px) {
+    .tabla-carrito {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+
+/*Contact*/
+.form-section {
+    background-color: white;
+    padding: 5rem 1rem;
+    font-family: var(--fuente_principal); 
+}
+
+.form-container {
+    max-width: 85rem;
+    margin: 0 auto;
+    background-color: white;
+    
+}
+
+.form-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--green-color);
+    margin-bottom: 5rem;
+    text-align: center;
+}
+
+.form-groups {
+    display: flex;
+    width: 100%;
+    gap: 2rem;
+    .form-group{
+        width: 100%;
+    }
+}
+
+.form-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding-top: 3rem;
+
+    button {
+        background-color: var(--green-button);
+        color: white;
+        border: none;
+        padding: 1.2rem 4rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1.4rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #157347;
+        font-weight: 700;
+    } 
+}
+
+.contact-form .form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+        font-size: 1.5rem;
+    }
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--gray-color);
+    font-weight: 600;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 1.3rem 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--sky-color);
+    background-color: #fff;
+}
+
+.form-alert {
+    margin-top: 2rem;
+    width: 100%;
+    color: white;
+    display: none;
+
+    p{
+        padding: 1.2rem;
+        text-align: center;
+        font-size: 1.4rem;
+        font-weight: 700;
+    }
+}
