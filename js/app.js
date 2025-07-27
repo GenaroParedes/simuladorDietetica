@@ -234,7 +234,7 @@ function cargarCarrito() {
 
 //Seccion Contacto
 let alertTimeout;
-const alert = document.querySelector('.form-alert');
+const alertForm = document.querySelector('.form-alert');
 const form = document.querySelector('.contact-form');
 const reset = document.querySelector('.reset-btn');
 const inputs = document.querySelectorAll('.verificar');
@@ -270,8 +270,8 @@ form.addEventListener('submit', (e) => {
 })
 
 function estilosMensaje(color, mensaje){
-  alert.style.display = 'block';
-  alert.style.background = `${color}`;
+  alertForm.style.display = 'block';
+  alertForm.style.background = `${color}`;
   parrafoAlert.textContent = `${mensaje}`;
 }
 
@@ -279,7 +279,7 @@ function reenderizarMensaje(){
   clearTimeout(alertTimeout);
 
   alertTimeout  = setTimeout(() => {
-    alert.style.display = 'none';
+    alertForm.style.display = 'none';
   }, 2000);
 }
 
