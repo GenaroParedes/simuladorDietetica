@@ -4,14 +4,62 @@ const carritoFront = document.querySelector('.carrito-front');
 const carritoBack = document.querySelector('.carrito-back');
 
 
+/*****************************************************************/
+/*
+async function fetchData(url){
+  try{
+    const response = await fetch(url);
+    if(!response.ok) {
+      throw new Error('Error al cargar los datos')
+    }
+    const data = await response.json();
+    console.log(data)
+    return data;
+  } catch(err) {
+    console.error('Error en el fetching de datos: ', {err});
+  } 
+} */
+
+/*Consumiendo API con json-server*/
+// async function cargarDatos() {
+//   let articulos = await fetchData('http://localhost:4000/productos');
+
+//   articulos.forEach((producto) => {
+//   const div = document.createElement('DIV');
+
+//   // Usamos clases Bootstrap para que sea responsivo
+//   div.className = "col-12 col-sm-6 col-md-4 col-lg-3 mb-4 producto";
+
+//   div.innerHTML = `
+//     <div class="card h-100">
+//       <img src="${producto.imagen}" class="card-img-top imagen-producto" alt="${producto.nombre}">
+//       <div class="card-body d-flex flex-column justify-content-between">
+//         <h3 class="card-title mt-3">${producto.nombre}</h3>
+//         <p class="card-text precio-producto">$${producto.precio}</p>
+//         <a href="#" class="btn btn-success mt-auto btn-producto">Agregar al carrito</a>
+//       </div>
+//     </div>
+//   `;
+
+//   contenedorProductos.appendChild(div);
+// });
+// }
+// cargarDatos();
+/**************************************************************/
+
+
+
+//*********************************************************************** */
+// PRODUCTOS QUE SE RECORREN DESDE EL ARCHIVO db.js, SIN JSON-SERVER
 productos.forEach((producto) => {
   const div = document.createElement('DIV');
 
   // Usamos clases Bootstrap para que sea responsivo
   div.className = "col-12 col-sm-6 col-md-4 col-lg-3 mb-4 producto";
 
+  //Card de productos
   div.innerHTML = `
-    <div class="card h-100">
+    <div class="card h-100 card-transparente">
       <img src="${producto.imagen}" class="card-img-top imagen-producto" alt="${producto.nombre}">
       <div class="card-body d-flex flex-column justify-content-between">
         <h3 class="card-title mt-3">${producto.nombre}</h3>
@@ -23,6 +71,7 @@ productos.forEach((producto) => {
 
   contenedorProductos.appendChild(div);
 });
+/************************************************************************/
 
 /*Abrir carrito*/
 carritoBtn.addEventListener('click', () => {
@@ -103,7 +152,7 @@ function renderizarCarrito() {
         <button class="btn btn-sm btn-outline-secondary btn-sumar" data-index="${index}">➕</button>
       </div>
       <p>$${subtotal}</p>
-      <button class="btn btn-sm btn-outline-danger btn-eliminar" data-index="${index}">Eliminar</button>
+      <button class="btn btn-md btn-outline-danger btn-eliminar" data-index="${index}">Eliminar</button>
     `;
 
     carritoFront.appendChild(fila);
@@ -178,8 +227,39 @@ function renderizarCarrito() {
   // Evento botón "Finalizar compra"
   const btnFinalizar = carritoFront.querySelector('.btn-finalizar');
   btnFinalizar.addEventListener('click', () => {
-    const modal = document.querySelector('.modal');
-    const modalInstance = bootstrap.Modal.getOrCreateInstance(modal);
+    //const modal = document.querySelector('.modal');
+    //const modalInstance = bootstrap.Modal.getOrCreateInstance(modal);
+    Swal.fire({
+      title: "Estás seguro de querer finalizar la compra?",
+      text: "No podrás revertir la acción",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#198754",
+      cancelButtonColor: "#D62900",
+      confirmButtonText: "Yes",
+      width: '42rem',
+      padding: '2rem',
+      customClass: {
+        htmlContainer: 'swal-text',
+        confirmButton: 'swal-confirm',
+        cancelButton: 'swal-cancel'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Compra finalizada con éxito",
+          text: "Gracias por tu compra",
+          icon: "success",
+          width: '42rem',
+          padding: '2rem',
+          customClass: {
+            htmlContainer: 'swal-text',
+            confirmButton: 'swal-confirm'
+          }
+        });
+      }
+    });
+
     carrito = [];
     guardarCarrito();
     renderizarCarrito();
@@ -210,15 +290,28 @@ botonesAgregar.forEach((btn, index) => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
     const productoSeleccionado = productos[index];
-    console.log(productoSeleccionado)
     const existente = carrito.find(p => p.id === productoSeleccionado.id);
-    console.log(existente)
     if (existente) {
       existente.cantidad++;
     } else {
       /*Si no existe en el carrito, lo agregamos y le damos una nueva propiedad al objeto, cantidad con valor 1*/
       carrito.push({ ...productoSeleccionado, cantidad: 1 });
     }
+
+    //Notificacion de agregado al carrito con Toastify
+    Toastify({
+      text: "Producto agregado al carrito",
+      //tamaño del texto mas grande
+      style: {
+        fontSize: '1.2rem'
+      },
+      duration: 1500,
+      backgroundColor: "#198754",
+      borderRadius: "10px",
+      gravity: "top", // gravity: "top" or "bottom"
+      position: "right", // position: "left", "center" or "right"
+    }).showToast();
+
     guardarCarrito();
     renderizarCarrito();
   });
@@ -294,3 +387,26 @@ reset.addEventListener('click', (e) => {
   e.preventDefault();
   form.reset();
 })
+
+/*Cambiar tono de la pagina*/
+const sun = document.querySelector('.sun');
+const moon = document.querySelector('.moon');
+
+window.addEventListener('load', () => {
+  const currentMode = localStorage.getItem('mode') || 'light-mode';
+  setMode(currentMode);
+});
+
+sun.addEventListener('click', () => setMode('light-mode'));
+moon.addEventListener('click', () => setMode('dark-mode'));
+
+function setMode(mode) {
+  const isDark = mode === 'dark-mode'; //Devuelve true si el modo es oscuro
+  //toggle tiene un segundo parametro que indica si se debe agregar o quitar la clase
+  sun.classList.toggle('active', isDark); //Si isDark es true, activa el sol, si no lo desactiva (La elimina si existe)
+  moon.classList.toggle('active', !isDark); //Si isDark es false, activa la luna, si no lo desactiva (La elimina si existe)
+  document.body.classList.toggle('dark-mode', isDark);
+  document.body.classList.toggle('light-mode', !isDark);
+
+  localStorage.setItem('mode', mode);
+}

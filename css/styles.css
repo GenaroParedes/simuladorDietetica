@@ -4,11 +4,16 @@
     --sky-color: #658E89;
     --light-green-color: #89A749;
     --orange-color: #D62900;
-    --light-brown-color: #EADCBB;
+    --light-brown-color: #e6c9a4;
     --rose-color: #F29EC1;
     --fuente_principal: "Open Sans", sans-serif;
     --green-button: #198754;
 }
+
+.swal-text  { font-size: 1.6rem; }
+.swal-confirm { font-size: 1.5rem; padding: 1rem 2rem; }
+.swal-cancel { font-size: 1.5rem; padding: 1rem 2rem; }
+
 /*Bases*/
 html {
     font-size: 62.5%;
@@ -19,27 +24,111 @@ html {
     box-sizing: inherit;
 }
 
-body {
-    font-family: var(--fuente_principal);
-    font-size: 1.6rem;
-    line-height: 1.8;
-}
-
 .contenedor { 
     width: 95%;
     max-width: 120rem;
     margin: 0 auto;
 }
 
+body {
+    background-color: var(--light-brown-color) !important;
+    color: var(--gray-color);
+    font-family: var(--fuente_principal);
+    font-size: 1.6rem;
+    line-height: 1.8;
+}
+
+/*Theme*/
+.dark-mode {
+    background-color: var(--gray-color) !important;
+    color: white;
+
+    .division{ 
+        height: 2px;
+        width: 100%;
+        background-color: var(--light-brown-color);
+        margin-top: 6rem;
+    }
+
+    .img-carrito{
+        filter: invert(1);
+    }
+
+    .carrito-front {
+        background-color: var(--gray-color);
+        color: white;
+    }
+
+    .producto {
+        background-color: var(--gray-color);
+        color: white;
+    }
+
+    .btn-eliminar{
+        color: white;
+    }
+    
+    .card.card-transparente {
+        background-color: transparent !important;
+        box-shadow: 0 0 2px .3px rgba(256, 256, 256, 0.3) !important;
+        color: white;
+    }
+
+    .card.card-transparente:hover {
+        box-shadow: 0 0 5px .5px rgba(256, 256, 256, 0.6) !important;
+    }
+    
+    .card.card-transparente .card-body {
+        background-color: transparent !important;
+    }
+}
+
+.division{ 
+    height: 2px;
+    width: 100%;
+    background-color: var(--gray-color);
+    margin-top: 6rem;
+}
+
+.carrito-front {
+    background-color: white;
+    color: var(--gray-color);
+}
+
 /*Header*/
 header{ 
-    background-color: var(--light-brown-color);
+    
     div {
         max-width: 120rem;
         a {
             display: flex;
             height: 100%;
         }
+    }
+}
+
+.header-logos {
+    display: flex;
+    gap: 2rem;
+    text-align: center;
+    justify-content: center;
+
+    .theme-toggle {
+        display: none;
+        background: none;
+        border: none;
+        padding: 0;
+    }
+
+    .active {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .theme-toggle:focus {
+        outline: 2px solid var(--sky-color);
+        outline-offset: 2px;
     }
 }
 
@@ -151,13 +240,13 @@ header{
 
 /*Productos*/
 .productos { 
-    background-color: var(--light-brown-color);
     padding-top: 5rem;
 
     h2{
         text-align: center;
         font-weight: 700;
         font-size: 3rem;
+        margin-bottom: 4rem;
     }
 
     .contenedor-productos{
@@ -191,17 +280,31 @@ header{
     }
 }
 
+/*Estilos a las card para light-mode*/
+.card.card-transparente {
+    box-shadow: 0 0 2px .8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+
+.card.card-transparente:hover {
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.6) !important;
+}
+
+
 /*Footer*/
 .footer{
     padding: 6rem;
     text-align: center;
-    background-color: var(--rose-color);
 }
 
 /*Carrito front y back*/
 .carrito-back {
-    background-color: rgba(0, 0, 0, 0.5); /* fondo negro con 50% de opacidad */
-    position: fixed;                     /* cubre toda la pantalla */
+    background-color: rgba(0, 0, 0, 0.5); 
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
@@ -216,20 +319,19 @@ header{
 }
 
 .carrito-front {
-    background-color: white;  /* fondo del carrito en sí */
-    width: 600px;             /* ancho del panel del carrito */
-    height: 100vh;            /* altura: toda la ventana visible */
+    width: 600px;             
+    height: 100vh;            
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
     text-align: center;
     padding: 4rem;
     overflow-y: auto;         /* permite scroll vertical si el contenido es muy alto */
-    position: fixed;          /* asegurate que sea fixed */
-    top: 0;                  /* pegado arriba */
-    right: 0;                /* pegado a la derecha */
-    z-index: 2100;           /* que esté arriba de carrito-back */
-    /* para que el contenido no se solape con el padding */
+    position: fixed;        
+    top: 0;                  
+    right: 0;              
+    z-index: 2100;           
     box-sizing: border-box;
     max-width: 100%;
+    
 
     h3{
         margin-top: 5rem;
@@ -298,23 +400,19 @@ header{
 
 /*Contact*/
 .form-section {
-    background-color: white;
-    padding: 5rem 1rem;
+    padding: 1rem;
     font-family: var(--fuente_principal); 
 }
 
 .form-container {
     max-width: 85rem;
     margin: 0 auto;
-    background-color: white;
-    
 }
 
 .form-title {
     font-size: 3rem;
     font-weight: 700;
-    color: var(--green-color);
-    margin-bottom: 5rem;
+    margin: 5rem 0;
     text-align: center;
 }
 
@@ -362,7 +460,6 @@ header{
 .contact-form label {
     display: block;
     margin-bottom: 0.5rem;
-    color: var(--gray-color);
     font-weight: 600;
 }
 
@@ -373,7 +470,7 @@ header{
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f9f9f9;
-    font-size: 1rem;
+    font-size: 1.5rem;
     transition: border-color 0.3s;
 }
 
@@ -400,21 +497,19 @@ header{
 
 /*Modal finalizar compra*/
 .modal-content {
-    min-height: 150px; /* Ajustá según tu necesidad */
+    min-height: 150px;
     padding: 2rem;
 }
 
-  /* Aumentar tamaño de los textos */
 .modal-content .modal-title {
     font-size: 2rem;
 }
 
 .modal-content .modal-body {
     font-size: 1.4rem;
-    /* Centrado horizontal y vertical */
     display: flex;
-    justify-content: center;  /* Centra horizontalmente */
-    align-items: center;      /* Centra verticalmente */
-    text-align: center;       /* Alinea el texto al centro */
-    height: 100%;             /* Asegura que ocupe toda la altura disponible */
+    justify-content: center;  
+    align-items: center;      
+    text-align: center;       
+    height: 100%;             
 }
