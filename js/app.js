@@ -5,7 +5,7 @@ const carritoBack = document.querySelector('.carrito-back');
 
 
 /*****************************************************************/
-/*
+
 async function fetchData(url){
   try{
     const response = await fetch(url);
@@ -13,25 +13,51 @@ async function fetchData(url){
       throw new Error('Error al cargar los datos')
     }
     const data = await response.json();
-    console.log(data)
     return data;
   } catch(err) {
     console.error('Error en el fetching de datos: ', {err});
   } 
-} */
+}
 
-/*Consumiendo API con json-server*/
-// async function cargarDatos() {
-//   let articulos = await fetchData('http://localhost:4000/productos');
+/*Consumiendo el archivo Json*/
+async function cargarDatos() {
+  const data = await fetchData('../db.json');
+  const articulos = data.productos;
+  articulos.forEach((producto) => {
+    const div = document.createElement('DIV');
+   // Usamos clases Bootstrap para que sea responsivo
+    div.className = "col-12 col-sm-6 col-md-4 col-lg-3 mb-4 producto";
 
-//   articulos.forEach((producto) => {
+    div.innerHTML = `
+      <div class="card h-100">
+        <img src="${producto.imagen}" class="card-img-top imagen-producto" alt="${producto.nombre}">
+        <div class="card-body d-flex flex-column justify-content-between">
+          <h3 class="card-title mt-3">${producto.nombre}</h3>
+          <p class="card-text precio-producto">$${producto.precio}</p>
+          <a href="#" class="btn btn-success mt-auto btn-producto">Agregar al carrito</a>
+        </div>
+      </div>
+    `;
+
+    contenedorProductos.appendChild(div);
+  });
+}
+cargarDatos();
+/**************************************************************/
+
+
+
+//*********************************************************************** */
+// PRODUCTOS QUE SE RECORREN DESDE EL ARCHIVO db.js, SIN JSON-SERVER
+// productos.forEach((producto) => {
 //   const div = document.createElement('DIV');
 
 //   // Usamos clases Bootstrap para que sea responsivo
 //   div.className = "col-12 col-sm-6 col-md-4 col-lg-3 mb-4 producto";
 
+//   //Card de productos
 //   div.innerHTML = `
-//     <div class="card h-100">
+//     <div class="card h-100 card-transparente">
 //       <img src="${producto.imagen}" class="card-img-top imagen-producto" alt="${producto.nombre}">
 //       <div class="card-body d-flex flex-column justify-content-between">
 //         <h3 class="card-title mt-3">${producto.nombre}</h3>
@@ -43,34 +69,6 @@ async function fetchData(url){
 
 //   contenedorProductos.appendChild(div);
 // });
-// }
-// cargarDatos();
-/**************************************************************/
-
-
-
-//*********************************************************************** */
-// PRODUCTOS QUE SE RECORREN DESDE EL ARCHIVO db.js, SIN JSON-SERVER
-productos.forEach((producto) => {
-  const div = document.createElement('DIV');
-
-  // Usamos clases Bootstrap para que sea responsivo
-  div.className = "col-12 col-sm-6 col-md-4 col-lg-3 mb-4 producto";
-
-  //Card de productos
-  div.innerHTML = `
-    <div class="card h-100 card-transparente">
-      <img src="${producto.imagen}" class="card-img-top imagen-producto" alt="${producto.nombre}">
-      <div class="card-body d-flex flex-column justify-content-between">
-        <h3 class="card-title mt-3">${producto.nombre}</h3>
-        <p class="card-text precio-producto">$${producto.precio}</p>
-        <a href="#" class="btn btn-success mt-auto btn-producto">Agregar al carrito</a>
-      </div>
-    </div>
-  `;
-
-  contenedorProductos.appendChild(div);
-});
 /************************************************************************/
 
 /*Abrir carrito*/
