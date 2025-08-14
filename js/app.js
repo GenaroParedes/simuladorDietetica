@@ -21,7 +21,8 @@ async function fetchData(url){
 
 /*Consumiendo el archivo Json*/
 async function cargarDatos() {
-  const data = await fetchData('../db.json');
+  //const data = await fetchData('../db.json'); //Esto para usarlo en servidor local
+  const data = await fetchData('https://github.com/GenaroParedes/simuladorDietetica/blob/main/db.json'); // Para desplegarlo en GitHub Pages
   const articulos = data.productos;
   articulos.forEach((producto) => {
     const div = document.createElement('DIV');
