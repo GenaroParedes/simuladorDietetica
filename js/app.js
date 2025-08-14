@@ -26,6 +26,11 @@ async function cargarDatos() {
   const articulos = data.productos;
   articulos.forEach((producto) => {
     const div = document.createElement('DIV');
+    const {id, nombre, precio, imagen} = producto;
+    //convertir id y precio a number
+    producto.id = Number(id);
+    producto.precio = Number(precio);
+    
    // Usamos clases Bootstrap para que sea responsivo
     div.className = "col-12 col-sm-6 col-md-4 col-lg-3 mb-4 producto";
 
@@ -42,6 +47,9 @@ async function cargarDatos() {
 
     contenedorProductos.appendChild(div);
   });
+  //Agregar productos al carrito al presionar el boton
+  const botonesAgregar = document.querySelectorAll('.btn-producto');
+  agregarCarrito(botonesAgregar);
 }
 cargarDatos();
 /**************************************************************/
@@ -100,7 +108,6 @@ function cerrarCarrito(){
 
 
 /*Agregar productos al carrito al presionar el boton*/
-const botonesAgregar = document.querySelectorAll('.btn-producto');
 const cantidadCarrito = document.querySelector('.cantidad-carrito');
 const precioTotalSpan = document.querySelector('.precio-total');
 let carrito = [];
@@ -210,7 +217,7 @@ function renderizarCarrito() {
   contenedorFinal.innerHTML = `
     <p class="parrafo-precio">Total: <span class="precio-total">$${total}</span></p>
     <button class="btn btn-danger btn-lg mt-3 btn-vaciar w-100 p-4 fs-4">🗑️ Vaciar carrito</button>
-    <button class="btn btn-primary btn-lg mt-3 btn-finalizar w-100 p-4 fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal">✅ Finalizar compra</button>
+    <button class="btn btn-primary btn-lg mt-3 btn-finalizar w-100 p-4 fs-4">✅ Finalizar compra</button>
   `;
 
   carritoFront.appendChild(contenedorFinal);
@@ -226,8 +233,6 @@ function renderizarCarrito() {
   // Evento botón "Finalizar compra"
   const btnFinalizar = carritoFront.querySelector('.btn-finalizar');
   btnFinalizar.addEventListener('click', () => {
-    //const modal = document.querySelector('.modal');
-    //const modalInstance = bootstrap.Modal.getOrCreateInstance(modal);
     Swal.fire({
       title: "Estás seguro de querer finalizar la compra?",
       text: "No podrás revertir la acción",
@@ -263,10 +268,6 @@ function renderizarCarrito() {
     guardarCarrito();
     renderizarCarrito();
     cerrarCarrito();
-
-    setTimeout(() => {
-      modalInstance.hide(); // Oculta el modal
-    }, 2000);
   });
 
   // Evento botones "Eliminar producto"
@@ -285,36 +286,42 @@ function renderizarCarrito() {
 }
 
 //Agregar al carrito al presionar boton de Agregar un producto
-botonesAgregar.forEach((btn, index) => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const productoSeleccionado = productos[index];
-    const existente = carrito.find(p => p.id === productoSeleccionado.id);
-    if (existente) {
-      existente.cantidad++;
-    } else {
-      /*Si no existe en el carrito, lo agregamos y le damos una nueva propiedad al objeto, cantidad con valor 1*/
-      carrito.push({ ...productoSeleccionado, cantidad: 1 });
-    }
+function agregarCarrito(botonesAgregar) {
+  botonesAgregar.forEach((btn, index) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const productoSeleccionado = productos[index];
+      const existente = carrito.find(p => p.id === productoSeleccionado.id);
+      if (existente) {
+        existente.cantidad++;
+      } else {
+        /*Si no existe en el carrito, lo agregamos y le damos una nueva propiedad al objeto, cantidad con valor 1*/
+        carrito.push({ ...productoSeleccionado, cantidad: 1 });
+      }
 
-    //Notificacion de agregado al carrito con Toastify
-    Toastify({
-      text: "Producto agregado al carrito",
-      //tamaño del texto mas grande
-      style: {
-        fontSize: '1.2rem'
-      },
-      duration: 1500,
-      backgroundColor: "#198754",
-      borderRadius: "10px",
-      gravity: "top", // gravity: "top" or "bottom"
-      position: "right", // position: "left", "center" or "right"
-    }).showToast();
+      //Notificacion de agregado al carrito con Toastify
+      Toastify({
+        text: "Producto agregado al carrito",
+        //tamaño del texto mas grande
+        style: {
+          fontSize: '1.2rem'
+        },
+        duration: 1500,
+        style: {
+          background: "#198754"
+        },
+        borderRadius: "10px",
+        gravity: "top", // gravity: "top" or "bottom"
+        position: "right", // position: "left", "center" or "right"
+      }).showToast();
 
-    guardarCarrito();
-    renderizarCarrito();
+      guardarCarrito();
+      renderizarCarrito();
+    });
   });
-});
+}
+
+
 
 //Guardar carrito actual
 function guardarCarrito() {
